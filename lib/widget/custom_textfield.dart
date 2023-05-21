@@ -1,27 +1,42 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
-  String hintText;
-  bool isVisible = true;
-  CustomTextField({Key? key,required this.hintText,required this.isVisible}) : super(key: key);
+  final String hintText;
+  final bool obscureText;
+  final TextEditingController controller;
+  final String? Function(String?)? validator;
+
+   const CustomTextField(
+      {Key? key,
+      required this.controller,
+      required this.obscureText,
+      required this.hintText,
+        this.validator
+      })
+      : super(key: key);
+
+
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 20,vertical: 10),
-        child: TextField(
-          decoration: InputDecoration(
-            hintText: hintText,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(20),
-
-
-              ),
-            )
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: TextFormField(
+        controller: controller,
+       // obscureText: obscureText,
+        decoration: InputDecoration(
+          hintText: hintText,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(0),
+            ),
           ),
+          enabledBorder: OutlineInputBorder(
+              borderSide: BorderSide(
+                  width: 2, color: Colors.redAccent.withOpacity(.5))),
         ),
+        validator: validator,
+      ),
     );
   }
 }
