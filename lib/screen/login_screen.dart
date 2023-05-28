@@ -23,10 +23,12 @@ class _LoginPageState extends State<LoginPage> {
   Future<void>signInWithEmailAndPassword()async{
     try{
       await Auth().signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+      Get.to(()=>HomePage());
     }on FirebaseAuthException catch(e){
       setState(() {
         errorMessage=e.message;
       });
+      Get.snackbar("Unauthentic user", "User email or password is incorrect");
     }
   }
 
@@ -66,15 +68,31 @@ class _LoginPageState extends State<LoginPage> {
                 },
               ),
               SizedBox(height: 10,),
-              CustomTextField(
-                  controller: _passwordController,
-                  obscureText: true,
-                  hintText: "Password",
-              validator: (val){
-                    if(val!.length <5){
-                      Get.snackbar("Password is too short", "Enter at least 5 character");
-                    }
-              },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextFormField(
+                    controller: _passwordController,
+                    obscureText: true,
+                   decoration: InputDecoration(
+                     hintText: "password",
+                     border: OutlineInputBorder(
+                       borderRadius: BorderRadius.all(
+                         Radius.circular(0),
+                       ),
+                     ),
+                     enabledBorder: OutlineInputBorder(
+                         borderSide: BorderSide(
+                             width: 2, color: Colors.redAccent.withOpacity(.5))),
+                   ),
+
+
+
+                validator: (val){
+                      if(val!.length <5){
+                        Get.snackbar("Password is too short", "Enter at least 5 character");
+                      }
+                },
+                ),
               ),
               SizedBox(height: 30,),
               CustomButton(
@@ -82,9 +100,9 @@ class _LoginPageState extends State<LoginPage> {
                 onTap: (){
                   if(_formKey.currentState!.validate()){
                     _formKey.currentState!.save();
-
+                    signInWithEmailAndPassword();
                   }
-                  Get.to(()=>HomePage());
+
                 },
               ),
               SizedBox(height: 20,),

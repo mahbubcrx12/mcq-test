@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
-  final bool obscureText;
+   bool obscureText = false;
   final TextEditingController controller;
   final String? Function(String?)? validator;
 
-   const CustomTextField(
+    CustomTextField(
       {Key? key,
       required this.controller,
-      required this.obscureText,
+       required this.obscureText,
       required this.hintText,
         this.validator
       })
