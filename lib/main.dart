@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mcq_test/screen/home_page.dart';
+import 'package:mcq_test/screen/login_screen.dart';
 import 'package:mcq_test/screen/splash_screen.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
-      home: SplashScreenPage()
+      home: LoginPage()
     );
   }
 }
