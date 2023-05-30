@@ -1,6 +1,5 @@
-import 'dart:math';
-
 import 'package:checkbox_grouped/checkbox_grouped.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class ExamPage extends StatefulWidget {
@@ -11,6 +10,9 @@ class ExamPage extends StatefulWidget {
 }
 
 class _ExamPageState extends State<ExamPage> {
+  final Stream<QuerySnapshot> _questionSet = FirebaseFirestore.instance.collection("questionSet").snapshots();
+  bool? _check;
+
   GroupController controller = GroupController();
   CustomGroupController customGroupController = CustomGroupController();
   ListGroupController listController = ListGroupController();
@@ -27,39 +29,46 @@ class _ExamPageState extends State<ExamPage> {
           centerTitle: true,
           backgroundColor: Colors.redAccent.withOpacity(.5),
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              SimpleGroupedCheckbox<int>(
-                controller: controller,
+        body: StreamBuilder<QuerySnapshot>(
+            stream: _questionSet,
+          builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot){
+              if(snapshot.hasError){
+                return Text("Something went wrong");
+              }
+              if(snapshot.connectionState == ConnectionState.waiting){
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return ListView(
+                children: snapshot.data!.docs.map((DocumentSnapshot document){
+                  Map<String,dynamic> examData = document.data()! as Map<String,dynamic>;
+                  return Container(
+                    margin: EdgeInsets.all(5),
+                    decoration: BoxDecoration(
+                      color: Colors.redAccent.withOpacity(.2),
+                    ),
+                    child: Column(children: [
+                      Row(
+                        children: [
 
-                itemsTitle: ["A", "B", "C", "D"],
-                values: [1, 2, 4, 5],
-                groupStyle: GroupStyle(
-                    activeColor: Colors.green,
-                    itemTitleStyle:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.w500)),
-                checkFirstElement: false,
-              ),
-              // ListGroupedCheckbox(
-              //   controller: listController,
-              //   groupTitles: List.generate(3, (index) => "groupe $index"),
-              //   values: List.generate(
-              //     3,
-              //         (i) =>
-              //         List.generate(5, (j) => "${(i + Random().nextInt(100)) * j}"),
-              //   ),
-              //   titles: List.generate(
-              //     3,
-              //         (i) => List.generate(5, (j) => "Title:$i-$j"),
-              //   ),
-              //   mapItemGroupedType: {
-              //     1: GroupedType.Chips,
-              //   },
-              // )
-            ],
-          ),
-        ),
+                          Text(examData['questionDetail'],style: TextStyle(fontSize: 30),),
+                        ],
+                      ),
+                      Text(examData['optionA'],style: TextStyle(fontSize: 20),),
+                      Text(examData['optionB'],style: TextStyle(fontSize: 20),),
+                      Text(examData['optionC'],style: TextStyle(fontSize: 20),),
+                      Text(examData['optionD'],style: TextStyle(fontSize: 20),),
+                      
+
+
+                      
+                    ],),
+                  );
+                }).toList(),
+              );
+          },
+        )
       ),
     );
   }

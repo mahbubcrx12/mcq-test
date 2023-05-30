@@ -5,7 +5,7 @@ import 'package:mcq_test/screen/question_making.dart';
 import 'package:mcq_test/widget/custom_button.dart';
 import 'package:mcq_test/widget/custom_textfield.dart';
 import 'package:get/get.dart';
-import 'package:mcq_test/service/auth_controller.dart';
+import 'package:mcq_test/controller/auth_controller.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
