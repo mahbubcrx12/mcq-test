@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mcq_test/screen/exam.dart';
 import 'package:mcq_test/screen/question_making.dart';
+import 'package:mcq_test/screen/quiz_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: InkWell(
         onTap: () {
-          Get.to(() => ExamPage());
+          Get.to(() => QuizPage());
         },
         child: Container(
           height: MediaQuery.of(context).size.height * .33,
