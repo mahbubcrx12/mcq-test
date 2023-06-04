@@ -23,13 +23,15 @@ class _HomePageState extends State<HomePage> {
               centerTitle: true,
               backgroundColor: Colors.redAccent.withOpacity(.5),
             ),
-            body: Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                _addQuestion(),
-                _mcqExam(),
-              ],
+            body: SingleChildScrollView(
+              child: Column(
+                //mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                 // _addQuestion(),
+                  _startQuiz(),
+                ],
+              ),
             )));
   }
 
@@ -59,7 +61,7 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  _mcqExam(){
+  _startQuiz(){
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: InkWell(
@@ -67,18 +69,18 @@ class _HomePageState extends State<HomePage> {
           Get.to(() => QuizPage());
         },
         child: Container(
-          height: MediaQuery.of(context).size.height * .33,
+          height: MediaQuery.of(context).size.height * .23,
           width: MediaQuery.of(context).size.width * .76,
           decoration: BoxDecoration(
               color: Colors.redAccent.withOpacity(.15),
               borderRadius: BorderRadius.circular(20)),
           child: Center(
             child: Text(
-              "Exam",
+              "Start Quiz",
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
-                  color: Colors.green),
+                  color: Colors.black),
             ),
           ),
         ),

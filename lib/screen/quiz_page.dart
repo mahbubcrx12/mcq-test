@@ -1,11 +1,12 @@
+import 'dart:async';
+import 'package:get/get.dart';
 import 'package:flutter/material.dart';
-import 'package:mcq_test/database/questions.dart';
+import 'package:mcq_test/screen/result_page.dart';
+
 
 class QuizPage extends StatefulWidget {
-
-
-  const QuizPage({Key? key,
-
+  const QuizPage({
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -31,7 +32,7 @@ class _QuizPageState extends State<QuizPage> {
         {'text': 'Web Development Kit', 'score': -2},
         {
           'text':
-          'SDK to build beautiful IOS, Android, Web & Desktop Native Apps',
+              'SDK to build beautiful IOS, Android, Web & Desktop Native Apps',
           'score': 10
         },
       ],
@@ -56,7 +57,7 @@ class _QuizPageState extends State<QuizPage> {
     },
     {
       'questionText':
-      'Q5. Is Flutter for Web and Desktop available in stable version?',
+          'Q5. Is Flutter for Web and Desktop available in stable version?',
       'answers': [
         {
           'text': 'Yes',
@@ -67,77 +68,176 @@ class _QuizPageState extends State<QuizPage> {
     },
   ];
 
-  void printAnswerValues() {
-    for (var question in _questions) {
-      List<Map<String, Object>> answers = question['answers'] as List<Map<String, Object>>;
-      for (var answer in answers) {
-        String answerText = answer['text'] as String;
-        print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkk");
-        print(answerText);
-      }
-    }
-  }
+  var _questionIndex = 0;
+  Timer? _timer;
+  int _remainingTime = 15;
+  var _totalScore = 0;
+
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    printAnswerValues();
+    startTimer();
   }
 
-  var _questionIndex = 0;
-  var _totalScore = 0;
+  @override
+  void dispose() {
+    _cancelTimer();
+    // TODO: implement dispose
+    super.dispose();
+  }
 
-  void _resetQuiz() {
-    setState(() {
-      _questionIndex = 0;
-      _totalScore = 0;
+  void startTimer() {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_remainingTime > 0) {
+          _remainingTime--;
+        } else {
+          _cancelTimer();
+          _navigateToNextQuestion();
+        }
+      });
     });
   }
 
-  void _answerQuestion(int score) {
-    _totalScore += score;
-
-    setState(() {
-      _questionIndex = _questionIndex + 1;
-    });
-    // ignore: avoid_print
-    print(_questionIndex);
-    if (_questionIndex < _questions.length) {
-      // ignore: avoid_print
-      print('We have more questions!');
-    } else {
-      // ignore: avoid_print
-      print('No more questions!');
-    }
+  void _cancelTimer() {
+    _timer?.cancel();
   }
-  get questionText => null;
+
+  void _navigateToNextQuestion([int? score]) {
+    setState(() {
+      if (_questionIndex < _questions.length - 1) {
+        _questionIndex++;
+        _remainingTime= 15;
+        startTimer();
+      }
+
+      else {
+        print("quiz completed");
+        Get.to(()=>ResultPage(result:score ,));
+      }
+
+    });
+  }
+
+
+
+  // void _resetQuiz() {
+  //   setState(() {
+  //     _questionIndex = 0;
+  //     _totalScore = 0;
+  //   });
+  // }
+
+  // void _answerQuestion(int score) {
+  //   _totalScore += score;
+  //
+  //   setState(() {
+  //     _questionIndex = _questionIndex + 1;
+  //   });
+  //   // ignore: avoid_print
+  //   print(_questionIndex);
+  //   if (_questionIndex < _questions.length) {
+  //     // ignore: avoid_print
+  //     print('We have more questions!');
+  //   } else {
+  //     // ignore: avoid_print
+  //     print('No more questions!');
+  //   }
+  // }
+  //
+  // void _rightOrWrongMessage(){
+  //
+  // }
+
+  @override
   @override
   Widget build(BuildContext context) {
-
+    //final question = _questions[_currentIndex];
     return Scaffold(
       appBar: AppBar(
-        title: Text("Quiz Page"),
+        title: Text(
+          "Quiz On Going",
+          style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         backgroundColor: Colors.redAccent.withOpacity(.5),
       ),
-      body: Container(
-        child: Padding(
-          padding: const EdgeInsets.all(30.0),
-          child: Column(
+      body: PageView.builder(
+        itemCount: _questions.length,
+        itemBuilder: (BuildContext context, int index) {
+          final question = _questions[_questionIndex];
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text( _questions[_questionIndex]['questionText'].toString()),
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: _questions.length,
-                itemBuilder: (ctx, index) {
-                  return Container();
+              SizedBox(height: 30,),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+
+                  Text("Remaining:",style: TextStyle(color: Colors.black.withOpacity(.4)),),
+                  Text(
+                    '$_remainingTime',
+                    style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
+                  ),
+                  Text('second',style: TextStyle(color: Colors.black.withOpacity(.4)),)
+                ],
+              ),
+              SizedBox(height: 15,),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  question['questionText'].toString(),
+                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+                ),
+              ),
+              ...((question['answers'] as List<Map<String, Object>>)).map(
+                (answer) {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: InkWell(
+                      child: Container(
+                        //height: 50,
+                        width: MediaQuery.of(context).size.width,
+                        decoration: BoxDecoration(
+                            color: Colors.redAccent.withOpacity(.1)),
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 20.0, vertical: 10),
+                            child: Container(
+                              child: Text(
+                                answer['text'].toString(),
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w400),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      onTap: (){
+                        setState(() {
+                           int score= answer['score'] as int;
+                          if(answer['score'] as int > 0){
+                            Get.snackbar('Great...', 'RIGHT answer',backgroundColor: Colors.green);
+                          }else{
+                            Get.snackbar('Oops...', 'WRONG answer',backgroundColor: Colors.redAccent);
+                          }
+                          _totalScore += score;
+                          _cancelTimer();
+                          _navigateToNextQuestion(_totalScore);
+                        });
+                      },
+
+                    ),
+                  );
                 },
-              )
+              ).toList(),
             ],
-          ),
-      ))
+          );
+        },
+      ),
     );
   }
-
 }

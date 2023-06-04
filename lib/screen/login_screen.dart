@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:mcq_test/screen/home_page.dart';
 import 'package:mcq_test/screen/question_making.dart';
+import 'package:mcq_test/screen/quiz_page.dart';
 import 'package:mcq_test/widget/custom_button.dart';
 import 'package:mcq_test/widget/custom_textfield.dart';
 import 'package:get/get.dart';
