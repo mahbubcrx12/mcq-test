@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mcq_test/screen/history.dart';
 import 'package:mcq_test/screen/question_making.dart';
 import 'package:mcq_test/screen/quiz_page.dart';
 
@@ -28,8 +29,10 @@ class _HomePageState extends State<HomePage> {
                 //mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                 // _addQuestion(),
+                  _addQuestion(),
                   _startQuiz(),
+                  _previousHistory(),
+
                 ],
               ),
             )));
@@ -43,7 +46,7 @@ class _HomePageState extends State<HomePage> {
           Get.to(() => QuestionMaking());
         },
         child: Container(
-          height: MediaQuery.of(context).size.height * .33,
+          height: MediaQuery.of(context).size.height * .23,
           width: MediaQuery.of(context).size.width * .76,
           decoration: BoxDecoration(
               color: Colors.redAccent.withOpacity(.15),
@@ -54,7 +57,7 @@ class _HomePageState extends State<HomePage> {
               style: TextStyle(
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
-                  color: Colors.green),
+                  color: Colors.black),
             ),
           ),
         ),
@@ -87,4 +90,32 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
+
+  _previousHistory(){
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+      child: InkWell(
+        onTap: () {
+          Get.to(() => HistoryPage());
+        },
+        child: Container(
+          height: MediaQuery.of(context).size.height * .23,
+          width: MediaQuery.of(context).size.width * .76,
+          decoration: BoxDecoration(
+              color: Colors.redAccent.withOpacity(.15),
+              borderRadius: BorderRadius.circular(20)),
+          child: Center(
+            child: Text(
+              "View History",
+              style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 }

@@ -40,7 +40,7 @@ dependencies:
   cloud_firestore: ^4.7.1
   firebase_auth: ^4.6.1
   firebase_storage: ^11.2.1
-  checkbox_grouped: ^1.9.0
+  sqflite: ^2.0.0
 
 dev_dependencies:
   flutter_test:

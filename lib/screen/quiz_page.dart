@@ -115,7 +115,7 @@ class _QuizPageState extends State<QuizPage> {
 
       else {
         print("quiz completed");
-        Get.to(()=>ResultPage(result:score ,));
+        Get.to(()=>ResultPage(result:score ?? 0,));
       }
 
     });
@@ -220,9 +220,10 @@ class _QuizPageState extends State<QuizPage> {
                         setState(() {
                            int score= answer['score'] as int;
                           if(answer['score'] as int > 0){
-                            Get.snackbar('Great...', 'RIGHT answer',backgroundColor: Colors.green);
-                          }else{
-                            Get.snackbar('Oops...', 'WRONG answer',backgroundColor: Colors.redAccent);
+                            Get.snackbar('Great...', 'RIGHT answer',backgroundColor: Colors.green,animationDuration: Duration(seconds: 0));
+                          }
+                          else{
+                            Get.snackbar('Oops...', 'WRONG answer',backgroundColor: Colors.redAccent,animationDuration: Duration(seconds: 0));
                           }
                           _totalScore += score;
                           _cancelTimer();

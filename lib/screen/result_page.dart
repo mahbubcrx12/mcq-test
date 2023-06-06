@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:mcq_test/screen/home_page.dart';
 import 'package:mcq_test/screen/quiz_page.dart';
+import 'package:mcq_test/service/store_result.dart';
+
 class ResultPage extends StatelessWidget {
   final int? result;
 
-  const ResultPage({Key? key, required this.result}) : super(key: key);
+
+  const ResultPage({Key? key, required this.result})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double resultInPer =(result!/50)! * 100;
+    double resultInPer = ((result! / 50)! * 100);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -22,7 +27,9 @@ class ResultPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 100,),
+            SizedBox(
+              height: 100,
+            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -57,18 +64,37 @@ class ResultPage extends StatelessWidget {
                       color: Colors.black.withOpacity(.5),
                       fontWeight: FontWeight.w500),
                 ),
-                Text('%', style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.black.withOpacity(.5),
-                    fontWeight: FontWeight.w500),
+                Text(
+                  '%',
+                  style: TextStyle(
+                      fontSize: 20,
+                      color: Colors.black.withOpacity(.5),
+                      fontWeight: FontWeight.w500),
                 )
               ],
             ),
-            SizedBox(height: 100,),
-            ElevatedButton(onPressed: (){
-              Get.to(()=>QuizPage());
-            }, child: Text("Restart Quiz",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold),),
-              style: ElevatedButton.styleFrom(primary: Colors.redAccent.withOpacity(.5)),
+            SizedBox(
+              height: 100,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                // Insert data into table
+                await StoreResult.insertData(
+                    DateTime.now().toString(), result!, resultInPer);
+
+                //Query all data from table
+                List<Map<String,dynamic>> resultData = await StoreResult.getAllResult();
+                print("kkkkkkkkkkkkkkkkkkkkkkkkkk");
+                print(resultData);
+                Get.to(() => HomePage());
+              },
+              child: Text(
+                "Restart Quiz",
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+              ),
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.redAccent.withOpacity(.5)),
             )
           ],
         ),
