@@ -29,7 +29,7 @@ class _HistoryPageState extends State<HistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Previous History'),
+        title: Text('Previous History',style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),),
         centerTitle: true,
         backgroundColor: Colors.redAccent.withOpacity(.5),
       ),
@@ -60,7 +60,7 @@ class _HistoryPageState extends State<HistoryPage> {
                       fontWeight: FontWeight.w500,
                     ),),
                     SizedBox(height: 4),
-                    Text('Result in Percentage: ${result['result_in_percentage']}'),
+                    Text('Result in Percentage: ${result['result_in_percentage']}%'),
                   ],
                 ),
               ),

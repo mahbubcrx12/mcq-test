@@ -198,7 +198,6 @@ class _QuizPageState extends State<QuizPage> {
                     padding: const EdgeInsets.all(8.0),
                     child: InkWell(
                       child: Container(
-                        //height: 50,
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                             color: Colors.redAccent.withOpacity(.1)),
