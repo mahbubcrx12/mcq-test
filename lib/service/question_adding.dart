@@ -1,26 +1,25 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
-
 class QuestionInserting{
   
   Future<String?> addQuestion({
     required String questionDetail,
-    required String optionA,
-    required String optionB,
-    required String optionC,
-    required String optionD,
-    required String answer
+    required String answer,
+    required String correctIndex,
+    required List<String> options,
 })async{
     try{
       CollectionReference reference= FirebaseFirestore.instance.collection("questionSet");
-      await reference.doc(reference.id).set({
+      DocumentReference docRef = reference.doc();
+      String docId=docRef.id;
+      await docRef.set({
         'questionDetail' : questionDetail,
-        'optionA' : optionA,
-        'optionB' : optionB,
-        'optionC' : optionC,
-        'optionD' : optionD,
         'answer' : answer,
+        'correctIndex': correctIndex,
+        'options':options
       });
+
+      return docId;
+
     }catch(e){
       return "error rrrrrrrrrrrr";
     }

@@ -4,6 +4,8 @@ import '../widget/custom_button.dart';
 import '../widget/custom_textfield.dart';
 import 'package:get/get.dart';
 
+import 'home_page.dart';
+
 class QuestionMaking extends StatefulWidget {
   const QuestionMaking({Key? key}) : super(key: key);
 
@@ -18,6 +20,7 @@ class _QuestionMakingState extends State<QuestionMaking> {
   TextEditingController option3Controller = TextEditingController();
   TextEditingController option4Controller = TextEditingController();
   TextEditingController answerController = TextEditingController();
+  TextEditingController correctIndexController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
@@ -96,21 +99,53 @@ class _QuestionMakingState extends State<QuestionMaking> {
                       hintText: "Answer : ",
                       validator: (val){
                         if(val!.isEmpty){
-                          Get.snackbar("Field is empty", "Fill the field");
+                          Get.snackbar("No annnnnnnnnnnnswer", "nnnnnnnnnnnnnnnnn");
                         }
-                      }),
+                      }
+                      ),
+                  // SizedBox(height: 10,),
+                  // CustomTextField(controller: correctIndexController,
+                  //     obscureText: false,
+                  //     hintText: "Answer Index : ",
+                  //     // validator: (val){
+                  //     //   if(val!.isEmpty){
+                  //     //     Get.snackbar("No annnnnnnnnnnnswer", "nnnnnnnnnnnnnnnnn");
+                  //     //   }
+                  //     // }
+                  // ),
                   SizedBox(height: 20,),
 
                   CustomButton(buttonName: "Save Question", onTap: () {
                     if(_formKey.currentState!.validate()){
                       _formKey.currentState!.save();
-                      QuestionInserting().addQuestion(
-                          questionDetail: questionController.text,
-                          optionA: option1Controller.text,
-                          optionB: option2Controller.text,
-                          optionC: option3Controller.text,
-                          optionD: option4Controller.text,
-                          answer: answerController.text);
+                     if(
+                     
+                     questionController.text.isEmpty ||
+                     option1Controller.text.isEmpty ||
+                     option2Controller.text.isEmpty ||
+                     option3Controller.text.isEmpty ||
+                     option4Controller.text.isEmpty ||
+                     answerController.text.isEmpty
+                     ){
+                       Get.snackbar("Fields are empty", "Fill all the fields");
+                     }
+                     else{
+                       QuestionInserting().addQuestion(
+                           questionDetail: questionController.text,
+                           // optionA: option1Controller.text,
+                           // optionB: option2Controller.text,
+                           // optionC: option3Controller.text,
+                           // optionD: option4Controller.text,
+                           answer: answerController.text,
+                           correctIndex: correctIndexController.text,
+                           options: [
+                         option1Controller.text,
+                         option2Controller.text,
+                         option3Controller.text,
+                         option4Controller.text
+                       ]);
+                       Get.to(()=>HomePage());
+                     }
                     }
 
                   })
