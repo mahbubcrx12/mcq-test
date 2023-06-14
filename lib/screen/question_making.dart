@@ -40,7 +40,8 @@ class _QuestionMakingState extends State<QuestionMaking> {
   Widget build(BuildContext context) {
     return  SafeArea(
       child: Scaffold(
-          appBar: AppBar(title: Text("Question making",style: TextStyle(fontWeight: FontWeight.bold),), centerTitle: true,backgroundColor: Colors.redAccent.withOpacity(.5),),
+          appBar: AppBar(title: Text("Question making",style: TextStyle(
+              fontWeight: FontWeight.bold),), centerTitle: true,backgroundColor: Colors.redAccent.withOpacity(.5),),
           body: SingleChildScrollView(
             child: Form(
               key: _formKey,
