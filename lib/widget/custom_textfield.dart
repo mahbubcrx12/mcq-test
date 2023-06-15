@@ -15,8 +15,6 @@ class CustomTextField extends StatelessWidget {
       })
       : super(key: key);
 
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -24,6 +22,7 @@ class CustomTextField extends StatelessWidget {
       child: TextFormField(
         controller: controller,
        // obscureText: obscureText,
+        textCapitalization: TextCapitalization.none,
         decoration: InputDecoration(
           hintText: hintText,
           border: OutlineInputBorder(

@@ -26,18 +26,35 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.redAccent.withOpacity(.5),
             ),
             body: SingleChildScrollView(
-              child: Column(
-                //mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  _addQuestion(),
-                  _adminQuestionSet(),
-                  _startQuiz(),
-                  _previousHistory(),
-
-
-                ],
-              ),
+              child:Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10
+                ),
+                    itemCount: 6,
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context,int index){
+                      return Container(
+                        height: 100,
+                        width: 100,
+                        color: Colors.redAccent,
+                      );
+                    }),
+              )
+              // Column(
+              //   //mainAxisAlignment: MainAxisAlignment.center,
+              //   crossAxisAlignment: CrossAxisAlignment.stretch,
+              //   children: [
+              //     _addQuestion(),
+              //     _adminQuestionSet(),
+              //     _startQuiz(),
+              //     _previousHistory(),
+              //
+              //
+              //   ],
+              // ),
             )));
   }
 
