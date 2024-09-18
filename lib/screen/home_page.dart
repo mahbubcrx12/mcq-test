@@ -15,6 +15,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
+    print('object');
     return SafeArea(
         child: Scaffold(
             appBar: AppBar(
@@ -26,38 +27,37 @@ class _HomePageState extends State<HomePage> {
               backgroundColor: Colors.redAccent.withOpacity(.5),
             ),
             body: SingleChildScrollView(
-              child:Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: GridView.builder(gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisSpacing: 10
-                ),
-                    itemCount: 6,
-                    shrinkWrap: true,
-                    itemBuilder: (BuildContext context,int index){
-                      return Container(
-                        height: 100,
-                        width: 100,
-                        color: Colors.redAccent,
-                      );
-                    }),
-              )
-              // Column(
-              //   //mainAxisAlignment: MainAxisAlignment.center,
-              //   crossAxisAlignment: CrossAxisAlignment.stretch,
-              //   children: [
-              //     _addQuestion(),
-              //     _adminQuestionSet(),
-              //     _startQuiz(),
-              //     _previousHistory(),
-              //
-              //
-              //   ],
-              // ),
-            )));
+                child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10,
+                      mainAxisSpacing: 10),
+                  itemCount: 6,
+                  shrinkWrap: true,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: 100,
+                      width: 100,
+                      color: Colors.redAccent,
+                    );
+                  }),
+            )
+                // Column(
+                //   //mainAxisAlignment: MainAxisAlignment.center,
+                //   crossAxisAlignment: CrossAxisAlignment.stretch,
+                //   children: [
+                //     _addQuestion(),
+                //     _adminQuestionSet(),
+                //     _startQuiz(),
+                //     _previousHistory(),
+                //
+                //
+                //   ],
+                // ),
+                )));
   }
-
 
   _adminQuestionSet() {
     return Padding(
@@ -112,7 +112,8 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  _startQuiz(){
+
+  _startQuiz() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: InkWell(
@@ -139,7 +140,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  _previousHistory(){
+  _previousHistory() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       child: InkWell(
@@ -165,5 +166,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
 }
